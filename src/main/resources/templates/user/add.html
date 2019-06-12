@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add new user</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <div class="col-8 offset-2">
+            <h1 class="text-success">New User (* - means required)</h1>
+            <form th:action="@{/user/add}" method="post" th:object="${user}" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name">Name*</label>
+                    <input id="name" type="text" th:field="*{name}" class="form-control" oninput="checkForms()" required/>
+                </div>
+
+                <p class="text text-danger" th:if="${errors.containsKey('name')}"
+                   th:text="${errors.get('name')}"></p>
+                <div class="form-group">
+                    <label for="surname">Surname*</label>
+                    <input id="surname" type="text" th:field="*{surname}" class="form-control" oninput="checkForms()" required/>
+                </div>
+                <p class="text text-danger" th:if="${errors.containsKey('surname')}"
+                   th:text="${errors.get('surname')}"></p>
+
+                <div class="form-group">
+                    <label for="email">Email (email or phone required)</label>
+                    <input id="email" type="email" th:field="*{email}" class="form-control" oninput="checkForms()"/>
+                </div>
+
+                <p class="text text-danger" th:if="${errors.containsKey('email')}"
+                   th:text="${errors.get('email')}"></p>
+
+                <div class="form-group">
+                    <label for="phone">Phone (email or phone required)</label>
+                    <input id="phone" type="number" th:field="*{phone}" class="form-control" oninput="checkForms()"/>
+                </div>
+                <p class="text text-danger" th:if="${errors.containsKey('phone')}"
+                   th:text="${errors.get('phone')}"></p>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input id="address" type="text" th:field="*{address}" class="form-control"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="purpose">Purpose</label>
+                    <input id="purpose" type="text" th:field="*{purpose}" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <button id="submitButton" class="btn btn-primary" type="submit" disabled>Add</button>
+                    <button class="btn btn-danger" type="reset">Clear</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+      function checkForms(){
+             nameInput = document.getElementById('name');
+             surnameInput = document.getElementById('surname');
+             phoneInput = document.getElementById('phone');
+             emailInput = document.getElementById('email');
+
+             areRequiredFieldsFilled = nameInput.value === "" || surnameInput.value === "" || (phoneInput.value==="" && emailInput.value ==="");
+
+            if(areRequiredFieldsFilled){
+                document.getElementById('submitButton').disabled=true;
+         } else{
+
+                document.getElementById('submitButton').disabled=false;
+            }
+      }
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</body>
+</html>
